@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import SavedScreen from "./screens/SavedScreen";
 import BookingScreen from "./screens/BookingScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -19,6 +19,7 @@ import UserScreen from "./screens/UserScreen";
 import ConfirmationScreen from "./screens/ConfirmationScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
@@ -66,7 +67,11 @@ const StackNavigator = () => {
               focused ? (
                 <Ionicons name="notifications" size={24} color="#003580" />
               ) : (
-                <Ionicons name="notifications-outline" size={24} color="black" />
+                <Ionicons
+                  name="notifications-outline"
+                  size={24}
+                  color="black"
+                />
               ),
           }}
         />
@@ -91,16 +96,39 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
-        <Stack.Screen name="Search" component={SearchScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="Places" component={PlacesScreen}/>
-        <Stack.Screen name="Map" component={MapScreen} options={{headerShown:false}}/>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Main"
+          component={BottomTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Places" component={PlacesScreen} />
+        <Stack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Info" component={PropertyInfoScreen} />
         <Stack.Screen name="Rooms" component={RoomsScreen} />
         <Stack.Screen name="User" component={UserScreen} />
-        <Stack.Screen name="Confirmation" component={ConfirmationScreen} />
+        <Stack.Screen
+          name="ConfirmationScreen"
+          component={ConfirmationScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

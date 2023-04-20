@@ -13,7 +13,7 @@ const SearchScreen = () => {
           place: "Nadiad",
           placeImage:
             "https://images.pexels.com/photos/7630190/pexels-photo-7630190.jpeg?auto=compress&cs=tinysrgb&w=800",
-          shortDescription: "City in Karnataka, India",
+          shortDescription: "in Gujarat, India",
           properties: [
             {
               id: "10",
@@ -290,11 +290,13 @@ const SearchScreen = () => {
           place: "Ahmedabad",
           placeImage:
             "https://images.pexels.com/photos/9373357/pexels-photo-9373357.jpeg?auto=compress&cs=tinysrgb&w=800",
-          shortDescription: "City in Telangana, India",
+          shortDescription: "City in Gujarat, India",
           properties: [
             {
               id: "20",
               name: "FabExpress Airport Stay Inn",
+              image:
+                "https://cf.bstatic.com/xdata/images/hotel/max1280x900/433845616.jpg?k=87bc315f35830189d9a1c935c3e167e648543c27f39ee4cafc5cf73ee24393b9&o=&hp=1",
               rating: 3.5,
               address:
                 "CFC-4/C, Road No-2 Hardware Park, Beside TCS, Tukkuguda, 501351 Hyderabad, India",
@@ -487,28 +489,67 @@ const SearchScreen = () => {
     },[items]);
   console.log(items);
   return (
-    <SafeAreaView>
-      <View
-        style={{
-          padding: 10,
-          margin: 10,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          borderColor:"#FFC72C",
-          borderWidth:4,
-          borderRadius:10
-        }}
-      >
-        <TextInput value={input} onChangeText={(text) => setInput(text)} placeholder="Enter Your Destination" />
-        <Feather name="search" size={22} color="black" />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.searchBar}>
+        <Feather name="search" size={22} color="gray" style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          value={input}
+          onChangeText={setInput}
+          placeholder="Search your destination"
+        />
       </View>
-
       <SearchResults data={data} input={input} setInput={setInput}/>
     </SafeAreaView>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop:20,
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  searchBar: {
+    height:40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F2F2F2',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    marginVertical: 15,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    flex: 1,
+  },
+});
+//     <SafeAreaView>
+//       <View
+//         style={{
+//           padding: 10,
+//           margin: 10,
+//           flexDirection: "row",
+//           alignItems: "center",
+//           justifyContent: "space-between",
+//           borderColor:"#FFC72C",
+//           borderWidth:4,
+//           borderRadius:10
+//         }}
+//       >
+//         <TextInput value={input} onChangeText={(text) => setInput(text)} placeholder="Enter Your Destination" />
+//         <Feather name="search" size={22} color="black" />
+//       </View>
+
+//       <SearchResults data={data} input={input} setInput={setInput}/>
+//     </SafeAreaView>
+//   );
+// };
+
 export default SearchScreen;
 
-const styles = StyleSheet.create({});

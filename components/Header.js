@@ -33,7 +33,7 @@ const Header = () => {
             fontSize: 15,
           }}
         >
-          Stays
+          Hotels
         </Text>
       </Pressable>
 
@@ -73,16 +73,14 @@ const Header = () => {
             fontSize: 15,
           }}
         >
-          Car Rental
+          Cars
         </Text>
       </Pressable>
 
       <Pressable
         style={{
           flexDirection: "row",
-          alignItems: "center",
-        
-         
+          alignItems: "center",  
         }}
       >
         <FontAwesome5 name="uber" size={26} color="white" />
@@ -94,7 +92,7 @@ const Header = () => {
             fontSize: 15,
           }}
         >
-          Taxi
+          Bike
         </Text>
       </Pressable>
     </View>

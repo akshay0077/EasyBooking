@@ -1,17 +1,27 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useLayoutEffect, useState,useEffect } from "react";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Modal,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import React, { useLayoutEffect, useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import PropertyCard from "../components/PropertyCard";
-import { BottomModal } from "react-native-modals";
-import { ModalFooter } from "react-native-modals";
-import { SlideAnimation } from "react-native-modals";
-import { ModalTitle } from "react-native-modals";
-import { FontAwesome } from '@expo/vector-icons';
+import {
+  ModalContent,
+  BottomModal,
+  ModalFooter,
+  SlideAnimation,
+  ModalTitle,
+} from "react-native-modals";
+import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import { ModalContent } from "react-native-modals";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -31,9 +41,9 @@ const PlacesScreen = () => {
           name: "FabHotel Zeke",
           image:
             "https://cf.bstatic.com/xdata/images/hotel/max1280x900/433845616.jpg?k=87bc315f35830189d9a1c935c3e167e648543c27f39ee4cafc5cf73ee24393b9&o=&hp=1",
-          rating: 3.6,
+          rating: 4.6,
           address:
-            "346, Hennur Main Road, Post, Kalyan Nagar, 560043 Bangalore, India ",
+            "123, Hennur Main Road, Post, Kalyan Nagar, 560043 Bangalore, India ",
           oldPrice: 4600,
           newPrice: 3312,
           latitude: "13.0359",
@@ -482,6 +492,7 @@ const PlacesScreen = () => {
   const navigation = useNavigation();
   const [modalVisibile, setModalVisibile] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState([]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -509,15 +520,15 @@ const PlacesScreen = () => {
       filter: "cost:High to Low",
     },
   ];
-  const [loading,setLoading] = useState(false);
-  const [items,setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
   useEffect(() => {
     if (items.length > 0) return;
 
     setLoading(true);
 
     const fetchProducts = async () => {
-      const colRef = collection(db,"places");
+      const colRef = collection(db, "places");
       const docsSnap = await getDocs(colRef);
       docsSnap.forEach((doc) => {
         items.push(doc.data());
@@ -526,49 +537,55 @@ const PlacesScreen = () => {
     };
     fetchProducts();
   }, [items]);
-  const searchPlaces = data?.filter((item) => item.place === route.params.place);
-  const [sortedData,setSortedData] = useState(items);
-  console.log(searchPlaces)
+  const searchPlaces = data?.filter(
+    (item) => item.place === route.params.place
+  );
+  const [sortedData, setSortedData] = useState(items);
+  console.log(searchPlaces);
 
-  const compare = (a,b) => {
-    if(a.newPrice > b.newPrice){
+  const compare = (a, b) => {
+    if (a.newPrice > b.newPrice) {
       return -1;
     }
-    if(a.newPrice < b.newPrice){
+    if (a.newPrice < b.newPrice) {
       return 1;
     }
     return 0;
-  }
+  };
 
-  const comparision = (a,b) => {
-    if(a.newPrice < b.newPrice){
+  const comparision = (a, b) => {
+    if (a.newPrice < b.newPrice) {
       return -1;
     }
-    if(a.newPrice > b.newPrice){
+    if (a.newPrice > b.newPrice) {
       return 1;
     }
     return 0;
-  }
+  };
 
   const applyFilter = (filter) => {
-    setModalVisibile(false)
-    switch(filter){
+    setModalVisibile(false);
+    switch (filter) {
       case "cost:High to Low":
-        searchPlaces.map((val) => val.properties.sort(compare));
-        setSortedData(searchPlaces);
+        sortedData = [...searchPlaces];
+        sortedData.map((val) => val.properties.sort(compare));
+        setSortedData(sortedData);
+
         break;
       case "cost:Low to High":
-        searchPlaces.map((val) => val.properties.sort(comparision));
-        setSortedData(searchPlaces);
+        sortedData = [...searchPlaces];
+        sortedData.map((val) => val.properties.sort(comparison));
+        setSortedData(sortedData);
+
         break;
     }
-  }
+  };
 
   console.log(route.params);
- 
+
   return (
     <View>
-      <Pressable
+      <TouchableOpacity
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -578,56 +595,70 @@ const PlacesScreen = () => {
           backgroundColor: "white",
         }}
       >
-        <Pressable
-          onPress={() => setModalVisibile(!modalVisibile)}
+        {/* Sort Showcase */}
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisibile(!modalVisibile);
+          }}
           style={{ flexDirection: "row", alignItems: "center" }}
         >
           <Octicons name="arrow-switch" size={22} color="gray" />
           <Text style={{ fontSize: 15, fontWeight: "500", marginLeft: 8 }}>
             Sort
           </Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={{ flexDirection: "row", alignItems: "center" }}>
+        {/* Filter Showcase */}
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Sort button clicked");
+            setModalVisibile(!modalVisibile);
+          }}
+          style={{ flexDirection: "row", alignItems: "center" }}
+        >
           <Ionicons name="filter" size={22} color="gray" />
           <Text style={{ fontSize: 15, fontWeight: "500", marginLeft: 8 }}>
             Filter
           </Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable onPress={() => navigation.navigate("Map",{
-          searchResults:searchPlaces,
-        })} style={{ flexDirection: "row", alignItems: "center" }}>
+        {/* Map Showcase */}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Map", {
+              searchResults: searchPlaces,
+            })
+          }
+          style={{ flexDirection: "row", alignItems: "center" }}
+        >
           <FontAwesome5 name="map-marker-alt" size={22} color="gray" />
           <Text style={{ fontSize: 15, fontWeight: "500", marginLeft: 8 }}>
             Map
           </Text>
-        </Pressable>
-      </Pressable>
+        </TouchableOpacity>
+      </TouchableOpacity>
 
       {loading ? (
         <Text>Fetching places....</Text>
       ) : (
         <ScrollView style={{ backgroundColor: "#F5F5F5" }}>
-        {sortedData
-          ?.filter((item) => item.place === route.params.place)
-          .map((item) =>
-            item.properties.map((property, index) => (
-              <PropertyCard
-                key={index}
-                rooms={route.params.rooms}
-                children={route.params.children}
-                adults={route.params.adults}
-                selectedDates={route.params.selectedDates}
-                property={property}
-                availableRooms={property.rooms}
-              />
-            ))
-          )}
-      </ScrollView>
+          {sortedData
+            ?.filter((item) => item.place === route.params.place)
+            .map((item) =>
+              item.properties.map((property, index) => (
+                <PropertyCard
+                  key={index}
+                  rooms={route.params.rooms}
+                  children={route.params.children}
+                  adults={route.params.adults}
+                  selectedDates={route.params.selectedDates}
+                  property={property}
+                  availableRooms={property.rooms}
+                />
+              ))
+            )}
+        </ScrollView>
       )}
-
-    
 
       <BottomModal
         onBackdropPress={() => setModalVisibile(!modalVisibile)}
@@ -636,13 +667,13 @@ const PlacesScreen = () => {
         footer={
           <ModalFooter>
             <Pressable
-            onPress={() => applyFilter(selectedFilter)}
+              onPress={() => applyFilter(selectedFilter)}
               style={{
                 paddingRight: 10,
                 marginLeft: "auto",
                 marginRight: "auto",
                 marginVertical: 10,
-                marginBottom:30
+                marginBottom: 30,
               }}
             >
               <Text>Apply</Text>
@@ -656,7 +687,7 @@ const PlacesScreen = () => {
           })
         }
         onHardwareBackPress={() => setModalVisibile(!modalVisibile)}
-        visible={modalVisibile}
+        visible={true}
         onTouchOutside={() => setModalVisibile(!modalVisibile)}
       >
         <ModalContent style={{ width: "100%", height: 280 }}>
@@ -684,12 +715,12 @@ const PlacesScreen = () => {
                   }}
                   key={index}
                 >
-                    {selectedFilter.includes(item.filter) ? (
-                        <FontAwesome name="circle" size={18} color="green" />
-                    ) : (
-                        <Entypo name="circle" size={18} color="black" />
-                    )}
-                  
+                  {selectedFilter.includes(item.filter) ? (
+                    <FontAwesome name="circle" size={18} color="green" />
+                  ) : (
+                    <Entypo name="circle" size={18} color="black" />
+                  )}
+
                   <Text
                     style={{ fontSize: 16, fontWeight: "500", marginLeft: 6 }}
                   >
