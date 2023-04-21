@@ -56,7 +56,7 @@ Desc : This Application help to Find and Book Best Quality Hotel for Stay
 <img src="https://github.com/akshay0077/EasyBooking/blob/Initial/App-ScreenShot/14-about-screen.jpeg" height="600px" width="500px">
 
 ## 00. Application Screen
-<img src="https://github.com/akshay0077/EasyBooking/blob/Initial/App-ScreenShot/AppScreen.png" height="700px" width="3000px">
+<img src="https://github.com/akshay0077/EasyBooking/blob/Initial/App-ScreenShot/AppScreen.png" height="600px" width="3000px">
 
 
 
