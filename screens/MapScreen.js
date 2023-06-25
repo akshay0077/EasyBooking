@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 const MapScreen = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const mapView = useRef(null);
   const coordinates = [
     {
@@ -28,10 +29,6 @@ const MapScreen = () => {
       longitude: 69.6254,
     },
   ];
-
-  const locationIcons = {
-    location1: require("../assets/icons/location-2.png"),
-  };
 
   useEffect(() => {
     const searchResults = route.params?.searchResults;
@@ -78,7 +75,6 @@ const MapScreen = () => {
                 latitude: Number(property.latitude),
                 longitude: Number(property.longitude),
               }}
-              image={locationIcons[property.locationId]} // set the marker icon based on the location's identifier
               onPress={() => {
                 // handle marker press event
                 navigation.navigate("LocationDetail", { property });
@@ -112,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MapScreen;
+export default MapScreen

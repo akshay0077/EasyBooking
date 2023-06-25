@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import StackNavigator from "./StackNavigator";
+import { ModalPortal } from "react-native-modals";
+
 
 import { Provider, useDispatch } from "react-redux";
 import { createStore } from "redux";
@@ -11,6 +13,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <StackNavigator />
+      <ModalPortal />
     </Provider>
   );
 }

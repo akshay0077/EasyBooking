@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -52,18 +52,24 @@ const PropertyCard = ({
     }
   };
 
-  useEffect(() => {
-    const getFavorite = async () => {
-      try {
-        const favorite = await AsyncStorage.getItem("favorite");
-        if (favorite !== null) {
-          setIsFavorite(JSON.parse(favorite));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getFavorite();
+  
+
+    useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      title: "Saved Items",
+      headerTitleStyle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "white",
+      },
+      headerStyle: {
+        backgroundColor: "#003580",
+        height: 110,
+        borderBottomColor: "transparent",
+        shadowColor: "transparent",
+      },
+    });
   }, []);
 
   return (
@@ -83,7 +89,7 @@ const PropertyCard = ({
             selectedDates: selectedDates,
           })
         }
-        style={{ margin: 15, flexDirection: "row", backgroundColor: "white" }}
+        style={{ marginTop: 70, flexDirection: "row", backgroundColor: "white" }}
       >
         <View>
           <Image
@@ -102,11 +108,7 @@ const PropertyCard = ({
           >
             <Text style={{ width: 200 }}>{property.name}</Text>
             <TouchableOpacity onPress={toggleFavorite}>
-              <AntDesign
-                name={isFavorite ? "heart" : "hearto"}
-                size={24}
-                color="red"
-              />
+              
             </TouchableOpacity>
           </View>
           <View

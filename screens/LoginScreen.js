@@ -14,6 +14,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 const LoginScreen = () => {
 
   // new added
+  const [isLoading, setIsLoading] = useState(false);
+const [loadingMessage, setLoadingMessage] = useState("");
+
+
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
@@ -21,37 +25,6 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  // const login = () => {
-  //   if(email){
-  //     setEmailError("");
-  //   }if(password){
-  //     setPasswordError("");
-  //   }
-  //   if(!email)
-  //   {
-  //     setEmailError("Please fill out Email fields.");
-  //   }
-  //   if (!password) {
-  //     setPasswordError("Please fill out Password fields.");
-  //   } 
-  //   if(password && email){
-  //     signInWithEmailAndPassword(auth, email, password)
-  //       .then((userCredential) => {
-  //         console.log("user credential", userCredential);
-  //         const user = userCredential.user;
-  //         console.log("user details", user);
-  //       })
-  //       .catch((error) => {
-  //         if (error.code === "auth/invalid-email") {
-  //           setEmailError("Invalid email address.");
-  //           setPasswordError("");
-  //         } else {
-  //           setEmailError("");
-  //           setPasswordError("Incorrect email or password.");
-  //         }
-  //       });
-  //   }
-  // };
 
   const login = () => {
     let emailError = "";
@@ -69,6 +42,9 @@ const LoginScreen = () => {
       return;
     }
     
+      setIsLoading(true);
+    setLoadingMessage("Please wait...");
+    
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("user credential", userCredential);
@@ -83,7 +59,11 @@ const LoginScreen = () => {
           setEmailError("");
           setPasswordError("Incorrect email or password.");
         }
-      });
+      })
+      .finally(() => {
+      setIsLoading(false);
+      setLoadingMessage("");
+    });
   };
   
   
@@ -111,27 +91,7 @@ const LoginScreen = () => {
       <Text style={styles.appName}>EasyBooking</Text>
       <Text style={styles.title}>Welcome Back!</Text>
       <View style={styles.form}>
-        {/* <View style={styles.inputContainer}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.input}
-            autoCapitalize="none"
-            placeholder="Enter your email address"
-            onChangeText={setEmail}
-            value={email}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            autoCapitalize="none"
-            secureTextEntry={true}
-            placeholder="Enter your password"
-            onChangeText={setPassword}
-            value={password}
-          />
-        </View> */}
+        
         <View style={styles.inputContainer}>
   <Text style={styles.label}>Email</Text>
   <TextInput
