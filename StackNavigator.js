@@ -19,6 +19,9 @@ import UserScreen from "./screens/UserScreen";
 import ConfirmationScreen from "./screens/ConfirmationScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import OnBoardingScreen1 from "./screens/OnBoardingScreen1"
+import OnBoardingScreen2 from "./screens/OnBoardingScreen2"
+import OnBoardingScreen3 from "./screens/OnBoardingScreen3"
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -96,14 +99,33 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
+        {/* OnBoarding Screen 1 */}
         <Stack.Screen
-          name="Login"
-          component={LoginScreen}
+          name="OnBoarding1"
+          component={OnBoardingScreen1}
+          options={{ headerShown: false }}
+        />
+        {/* OnBoarding Screen 2 */}
+         <Stack.Screen
+          name="OnBoarding2"
+          component={OnBoardingScreen2}
+          options={{ headerShown: false }}
+        />
+        {/* ObBoarding Screen 3 */}
+         <Stack.Screen
+          name="OnBoarding3"
+          component={OnBoardingScreen3}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
